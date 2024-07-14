@@ -43,7 +43,7 @@ namespace TiltBrush
                     ""name"": ""TriggerTouch"",
                     ""type"": ""Button"",
                     ""id"": ""3544fe23-65ae-415c-ab58-721dfc92223b"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -52,7 +52,7 @@ namespace TiltBrush
                     ""name"": ""TriggerButton"",
                     ""type"": ""Button"",
                     ""id"": ""6ed563ff-a250-4d2f-8b14-d1fe360a2470"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
