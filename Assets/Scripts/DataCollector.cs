@@ -5,6 +5,7 @@ using System.IO;
 using Newtonsoft.Json;
 using TiltBrush;
 using static TiltBrush.InputManager;
+using UnityEngine.SpatialTracking;
 
 public class DataCollector : MonoBehaviour
 {
@@ -22,27 +23,25 @@ public class DataCollector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    private void FixedUpdate()
-    {
         if (conductColletion)
         {
             DataInfo dataInfo = new DataInfo();
             dataInfo.time = Time.time;
             Device headset = new Device();
-            headset.position = new Position(transform.GetChild(0).position);
-            headset.rotation = new Rotation(transform.GetChild(0).rotation);
+            PoseDataSource.TryGetDataFromSource(TrackedPoseDriver.TrackedPose.Center, out Pose centerEye);
+            PoseDataSource.TryGetDataFromSource(TrackedPoseDriver.TrackedPose.LeftPose, out Pose leftController);
+            PoseDataSource.TryGetDataFromSource(TrackedPoseDriver.TrackedPose.RightPose, out Pose rightController);
+            headset.position = new Position(centerEye.position);
+            headset.rotation = new Rotation(centerEye.rotation);
             dataInfo.headset = headset;
-            Device leftController = new Device();
-            leftController.position = new Position(InputManager.Wand.Geometry.GripAttachPoint.position);
-            leftController.rotation = new Rotation(InputManager.Wand.Geometry.GripAttachPoint.rotation);
-            dataInfo.leftController = leftController;
-            Device rightController = new Device();
-            rightController.position = new Position(InputManager.Brush.Geometry.GripAttachPoint.position);
-            rightController.rotation = new Rotation(InputManager.Brush.Geometry.GripAttachPoint.rotation);
-            dataInfo.rightController = rightController;
+            Device left = new Device();
+            left.position = new Position(leftController.position);
+            left.rotation = new Rotation(leftController.rotation);
+            dataInfo.leftController = left;
+            Device right = new Device();
+            right.position = new Position(rightController.position);
+            right.rotation = new Rotation(rightController.rotation);
+            dataInfo.rightController = right;
             string path = folderPath + "/" + game + "_" + user + ".json";
             if (!File.Exists(path)) File.AppendAllText(path, "[");
             else File.AppendAllText(path, ",");
